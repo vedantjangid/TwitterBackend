@@ -8,13 +8,18 @@ const prisma = new PrismaClient();
 
 
 
+
+
 router.post('/', async (req, res) => {
-    const {content , userId , image} = req.body;
+    const {content , image} = req.body;
+    // @ts-ignore
+    const user = req.user;
+
     try {
         const newTweet = await prisma.tweet.create({
             data: {
                 content,
-                userId, //todo : change this to session user id
+                userId: user.id, //todo : change this to session user id
                 image
             },
         });
@@ -46,9 +51,15 @@ router.get('/:id', async (req, res) => {
    const tweet =  await prisma.tweet.findMany({
         where:{
             userId : Number(id)
+            
+        },
+        include: {
+            user: true,
         }
+
         
-    })
+    }
+    )
     res.json(tweet)
    } catch (error) {
     res.json({message: `can not find any tweets by id: ${id}`});

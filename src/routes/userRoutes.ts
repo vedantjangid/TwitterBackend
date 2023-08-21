@@ -4,6 +4,7 @@ import {PrismaClient} from '@prisma/client';
 const router = Router();
 const prisma = new PrismaClient();
 
+
 //crud implimentation
 
 router.post('/', async(req, res) => {
