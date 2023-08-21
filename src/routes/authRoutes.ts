@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import jwt from 'jsonwebtoken';
+import { sendEmailToken } from "../services/emailService";
 
 const EMAIL_TOKEN_EXPIRATION_MINUTES = 30;
 const AUTHENTICATION_TOKEN_EXPIRATION_HOURS = 24;
-const JWT_SECRET = 'secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -45,8 +46,11 @@ router.post('/login', async (req, res) => {
 
         }}
     })
-    res.json(createToken);
-    console.log(createToken)
+    
+     await sendEmailToken(email, emailToken);
+     console.log("email sent")
+     res.json(createToken);
+    
     } catch (error) {
         
         res.json({message: "can not find any users"});

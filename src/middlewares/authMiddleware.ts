@@ -6,7 +6,7 @@ import { PrismaClient , User } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const JWT_SECRET = 'secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 type AuthRequest = Request & { user?: User };
 

@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
         const newTweet = await prisma.tweet.create({
             data: {
                 content,
-                userId: user.id, //todo : change this to session user id
+                userId: user.id, 
                 image
             },
         });
