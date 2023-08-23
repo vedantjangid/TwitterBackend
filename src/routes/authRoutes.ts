@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import jwt from 'jsonwebtoken';
 import { sendEmailToken } from "../services/emailService";
 
+
 const EMAIL_TOKEN_EXPIRATION_MINUTES = 30;
 const AUTHENTICATION_TOKEN_EXPIRATION_HOURS = 24;
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
@@ -48,6 +49,7 @@ router.post('/login', async (req, res) => {
     })
     
      await sendEmailToken(email, emailToken);
+
      console.log("email sent")
      res.json(createToken);
     

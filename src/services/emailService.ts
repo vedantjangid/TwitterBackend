@@ -1,6 +1,8 @@
 import {SESClient, SendEmailCommand} from "@aws-sdk/client-ses"
-require('dotenv').config();
 const ses = new SESClient({region:'ap-south-1'});
+require('dotenv').config();
+
+
 
 
 
@@ -39,4 +41,12 @@ export async function sendEmailToken(email: string, Token: string) {
         console.log({message: "can not send email" , error});
     }
 }
+
+
+
+
+
+
+
+
 
