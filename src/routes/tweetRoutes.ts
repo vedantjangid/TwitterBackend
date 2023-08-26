@@ -22,6 +22,9 @@ router.post('/', async (req, res) => {
                 userId: user.id, 
                 image
             },
+            include: {
+                user: true,
+            }
         });
         res.json(newTweet);
     }
@@ -47,10 +50,11 @@ router.get('/', async(req, res) => {
 
 router.get('/:id', async (req, res) => {
    const {id} = req.params;
+   console.log("querying tweet by id", id)
    try {
-   const tweet =  await prisma.tweet.findMany({
+   const tweet =  await prisma.tweet.findUnique({
         where:{
-            userId : Number(id)
+            id : Number(id)
             
         },
         include: {

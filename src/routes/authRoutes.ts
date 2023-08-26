@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { sendEmailToken } from "../services/emailService";
 
 
+
 const EMAIL_TOKEN_EXPIRATION_MINUTES = 30;
 const AUTHENTICATION_TOKEN_EXPIRATION_HOURS = 24;
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
@@ -12,7 +13,7 @@ const router = Router();
 const prisma = new PrismaClient();
 
 function generatetoken() {
-    return Math.floor(1000000 + Math.random() * 90000000000).toString()
+    return Math.floor(100000 + Math.random() * 9000).toString()
 }
 
 function generateAuthToken(tokenId: Number): string {

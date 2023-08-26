@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 router.post('/', async(req, res) => {
     const {name , email , username} = req.body;
-    const image = `https://api.dicebear.com/6.x/notionists/svg?seed=${name}`
+    const image = `https://api.dicebear.com/6.x/notionists/jpg?seed=${username}&width=285&height=285`
     try {
         const newUser = await prisma.user.create({
             data: {
@@ -38,27 +38,46 @@ router.get('/', async(req, res) => {
    
 })
 
-router.get('/:id', async (req, res) => {
-   const {id} = req.params;
+// router.get('/:id', async (req, res) => {
+//    const {id} = req.params;
 
-   try {
-    const user = await prisma.user.findUnique({
-        where: {
+//    try {
+//     const user = await prisma.user.findUnique({
+//         where: {
 
-           id: Number(id),
-           },
-           include: {
-               posts: true,
-           },
-       });
-       res.json(user);
-   } catch (error) {
-    res.json({message: "can not find any users"});
-    console.log(error)
-   }
+//            id: Number(id),
+//            },
+//            include: {
+//                posts: true,
+//            },
+//        });
+//        res.json(user);
+//    } catch (error) {
+//     res.json({message: "can not find any user"});
+//     console.log(error)
+//    }
   
-})
+// })
 
+router.get('/:email', async (req, res) => {
+    const {email} = req.params;
+ 
+    try {
+     const user = await prisma.user.findUnique({
+         where: {
+            email : email,
+            },
+            include: {
+                posts: true,
+            },
+        });
+        res.json(user);
+    } catch (error) {
+     res.json({message: "can not find any user"});
+     console.log(error)
+    }
+   
+ })
 
 router.put('/:id', async(req, res) => {
     const {id} = req.params;
